@@ -1,4 +1,5 @@
 from flask import Flask
+from .blueprints.SaveUser import SaveUser
 
 class BaseRouter:
     base_url: str
@@ -7,4 +8,8 @@ class BaseRouter:
         self.base_url = base_url
 
     def register_flask_blueprints(self, app: Flask):
-        pass
+        # SaveUser.register(app, route_base=self.base_url)
+        app.register_blueprint(SaveUser)
+
+
+

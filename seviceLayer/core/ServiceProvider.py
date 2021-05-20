@@ -1,6 +1,9 @@
 from repository.core.RepositoryProvider import RepositoryProvider
 from seviceLayer.Managers.AuthorizationManager import AuthorizationManager
 from seviceLayer.SaveUserService import SaveUserService
+from seviceLayer.SuggestionService import SuggestionService
+from seviceLayer.SaveOrderService import SaveOrderService
+
 
 
 class ServiceProvider:
@@ -16,3 +19,9 @@ class ServiceProvider:
 
     def make_save_user_service(self):
         return SaveUserService(self.repository_provider.make_user_profile(), self.auth)
+
+    def make_suggestions_service(self):
+        return SuggestionService(self.repository_provider.make_suggestions())
+
+    def make_save_orders_service(self):
+        return SaveOrderService(self.repository_provider.submit_orders(), self.repository_provider.make_user_profile())

@@ -19,3 +19,5 @@ class SaveUserRepository:
     def remove_record(self, user_id:  str):
         return self.collection.delete_one({'user_id': user_id})
 
+
+

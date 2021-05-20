@@ -1,5 +1,7 @@
 from flask import Flask
 from .blueprints.SaveUser import SaveUser
+from .blueprints.GetSuggestions import GetSuggestions
+from .blueprints.Orders import Orders
 
 class BaseRouter:
     base_url: str
@@ -10,6 +12,9 @@ class BaseRouter:
     def register_flask_blueprints(self, app: Flask):
         # SaveUser.register(app, route_base=self.base_url)
         app.register_blueprint(SaveUser)
+        app.register_blueprint(Orders)
+        app.register_blueprint(GetSuggestions)
+
 
 
 

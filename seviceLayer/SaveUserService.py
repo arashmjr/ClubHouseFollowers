@@ -13,13 +13,16 @@ class SaveUserService:
 
     def save_profile(self, json:str):
         model = SaveUserDomainModel(json['user_id'], json['name'], json['photo_url'], json['username'],
-                                    json['token'], json['phone_number'])
-        record = self.repository.find_record_by_user_id(json['user_id'])
+                                    json['token'], json['phone_number'], json['bio'], json['coin'])
+        record = self.repository.find_record_by_user_id(model.user_id)
+        print(record)
         if record is None:
             self.repository.insert(model)
             return True
-        self.repository.remove_record(record)
+        self.repository.remove_record(model.user_id)
         self.repository.insert(model)
+        # record1 = self.repository.find_record_by_user_id(model.user_id)
+        # print(record1)
         return True
 
 

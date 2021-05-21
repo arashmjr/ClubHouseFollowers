@@ -2,6 +2,7 @@ from repository.core.CoreDatabase import CoreDatabase
 from repository.SaveUserRepository import SaveUserRepository
 from repository.SuggestionRepository import SuggestionRepository
 from repository.SaveOrderRepository import SaveOrderRepository
+from repository.UserFollowRepository import UserFollowRepository
 
 class RepositoryProvider:
     database = CoreDatabase.get_instance()
@@ -17,3 +18,7 @@ class RepositoryProvider:
     def submit_orders(self):
         collection = self.database.user_db["orders"]
         return SaveOrderRepository(collection)
+
+    def make_user_follows(self):
+        collection = self.database.user_db["userFollow"]
+        return UserFollowRepository(collection)

@@ -3,6 +3,7 @@ from seviceLayer.Managers.AuthorizationManager import AuthorizationManager
 from seviceLayer.SaveUserService import SaveUserService
 from seviceLayer.SuggestionService import SuggestionService
 from seviceLayer.SaveOrderService import SaveOrderService
+from seviceLayer.UserFollowService import UserFollowService
 
 
 
@@ -25,3 +26,6 @@ class ServiceProvider:
 
     def make_save_orders_service(self):
         return SaveOrderService(self.repository_provider.submit_orders(), self.repository_provider.make_user_profile())
+
+    def make_user_follow_service(self):
+        return UserFollowService(self.repository_provider.make_user_follows(), self.repository_provider.make_user_profile())

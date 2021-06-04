@@ -15,7 +15,7 @@ class SaveUserRepository:
     def find_record_by_user_id(self, user_id: str):
         return self.collection.find_one({"user_id": user_id})
 
-    def find(self):
+    def get_all(self):
         arr = []
         for x in self.collection.find():
             arr.append(x)
@@ -26,7 +26,6 @@ class SaveUserRepository:
 
     def remove_all(self):
         delete_all = self.collection.delete_many({})
-        print(delete_all.deleted_count, " documents deleted.")
         return delete_all
 
     def update_coins(self, document: dict):

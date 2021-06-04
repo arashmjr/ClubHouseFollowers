@@ -8,6 +8,7 @@ from flask_api import status
 
 UserFollows = Blueprint('UserFollows', __name__)
 
+
 @UserFollows.route('/UserFollows', methods=['POST'])
 def save_user():
     json = request.get_json()

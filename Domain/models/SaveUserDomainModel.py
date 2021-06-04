@@ -29,6 +29,7 @@ class SaveUserDomainModel:
                 "username": self.username,
                 "token": self.token,
                 "phone_number": self.phone_number,
-                "bio":self.bio,
+                "bio": self.bio,
                 "coin": self.coin
                 }
+

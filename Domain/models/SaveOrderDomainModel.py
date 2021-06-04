@@ -1,5 +1,6 @@
 import datetime
 
+
 class SaveOrderDomainModel:
 
     user_id: str
@@ -22,3 +23,4 @@ class SaveOrderDomainModel:
                 "creation_date": self.creation_date,
                 "isActive": self.isActive
                 }
+

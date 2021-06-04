@@ -14,10 +14,9 @@ class SaveOrderRepository:
 
     def remove_all(self):
         delete_all = self.collection.delete_many({})
-        print(delete_all.deleted_count, " documents deleted.")
         return delete_all
 
-    def find(self):
+    def get_all(self):
         arr = []
         for item in self.collection.find():
             arr.append(item)
@@ -26,7 +25,7 @@ class SaveOrderRepository:
     def find_suggestions(self):
         arr = []
         for item in self.collection.find({}, {"user_id": 1, "order_id": 1, "size": 1, "isActive": 1}):
-             arr.append(item)
+            arr.append(item)
         return arr
 
     def find_record_by_user_id(self, user_id: str):
@@ -36,3 +35,4 @@ class SaveOrderRepository:
         my_query = {"isActive": document['isActive']}
         new_values = {"$set": {"isActive": False}}
         return self.collection.update_one(my_query, new_values)
+

@@ -16,3 +16,4 @@ class UserFollowDomainModel:
                 "follow_id": self.follow_id,
                 "order_id": self.order_id
                 }
+

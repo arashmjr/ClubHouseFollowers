@@ -12,7 +12,7 @@ class UserFollowRepository:
         result = self.collection.insert_one(model.to_dict())
         return str(result.inserted_id)
 
-    def find(self, user_id: str):
+    def get_all(self, user_id: str):
         arr = []
         for item in self.collection.find({"user_id": user_id}):
             arr.append(item)
@@ -23,7 +23,6 @@ class UserFollowRepository:
 
     def remove_all(self):
         delete_all = self.collection.delete_many({})
-        print(delete_all.deleted_count, " documents deleted.")
         return delete_all
 
     def find_count_of_followIds(self, user_id: str, order_id: str):

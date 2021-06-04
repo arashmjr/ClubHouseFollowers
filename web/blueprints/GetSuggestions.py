@@ -7,12 +7,13 @@ from flask_api import status
 
 GetSuggestions = Blueprint('GetSuggestions', __name__)
 
+
 @GetSuggestions.route('/GetSuggestions', methods=['GET'])
 def get_suggestions():
     try:
         service = ServiceProvider().make_suggestions_service()
         result = service.suggestion_user()
-        response = BaseResponse(result ,True, MessageIds.SUCCESS)
+        response = BaseResponse(result, True, MessageIds.SUCCESS)
         return jsonify(response.serialize()), status.HTTP_201_CREATED
 
     except ValueError:

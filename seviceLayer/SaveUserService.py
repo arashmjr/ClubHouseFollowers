@@ -1,12 +1,15 @@
+from seviceLayer.Managers.AuthorizationManager import AuthorizationManager
 from repository.SaveUserRepository import SaveUserRepository
 from Domain.models.SaveUserDomainModel import SaveUserDomainModel
 
 
 class SaveUserService:
     repository: SaveUserRepository
+    auth: AuthorizationManager
 
-    def __init__(self, repository: SaveUserRepository):
+    def __init__(self, repository: SaveUserRepository,  auth: AuthorizationManager):
         self.repository = repository
+        self.auth = auth
 
     def save_profile(self, json: str):
         model = SaveUserDomainModel(json['user_id'], json['name'], json['photo_url'], json['username'],

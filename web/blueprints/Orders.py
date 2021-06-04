@@ -7,6 +7,7 @@ from flask_api import status
 
 Orders = Blueprint('Orders', __name__)
 
+
 @Orders.route('/Orders', methods=['POST'])
 def submit_orders():
     json = request.get_json()

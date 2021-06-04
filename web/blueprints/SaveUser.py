@@ -15,7 +15,7 @@ def save_user():
     try:
         service = ServiceProvider().make_save_user_service()
         service.save_profile(json)
-        response = BaseResponse(True, MessageIds.SUCCESS)
+        response = BaseResponse({},True, MessageIds.SUCCESS)
         return jsonify(response.serialize()), status.HTTP_201_CREATED
 
     except ValueError:

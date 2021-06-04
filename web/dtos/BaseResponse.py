@@ -2,19 +2,21 @@ from web.utils.Localization import MessageIds, localize
 
 
 class BaseResponse:
+    data: dict
     success: bool
     message_code: int
     message: str
 
-    def __init__(self, success: bool = True, message_code: MessageIds = MessageIds.SUCCESS):
+    def __init__(self, data: dict, success: bool = True, message_code: MessageIds = MessageIds.SUCCESS):
         super().__init__()
+        self.data = data
         self.message_code = message_code
         self.success = success
         self.message = localize(message_code)
 
     def serialize(self):
         return {
-
+            'data': self.data,
             'success': self.success,
             'message': self.message,
         }

@@ -9,7 +9,12 @@ GetSuggestions = Blueprint('GetSuggestions', __name__)
 
 @GetSuggestions.route('/GetSuggestions', methods=['GET'])
 def get_suggestions():
-    service = ServiceProvider().make_suggestions_service()
-    service.suggetion_user()
-    response = BaseResponse(True, MessageIds.SUCCESS)
-    return jsonify(response.serialize()), status.HTTP_201_CREATED
+    try:
+        service = ServiceProvider().make_suggestions_service()
+        result = service.suggestion_user()
+        response = BaseResponse(result ,True, MessageIds.SUCCESS)
+        return jsonify(response.serialize()), status.HTTP_201_CREATED
+
+    except ValueError:
+        response = BaseError(MessageIds.ERROR_NOT_FOUND)
+        return jsonify(response.serialize()), status.HTTP_400_BAD_REQUEST

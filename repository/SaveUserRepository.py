@@ -9,27 +9,34 @@ class SaveUserRepository:
         self.collection = collection
 
     def insert(self, model: SaveUserDomainModel):
-        self.collection.insert_one(model.to_dict())
-
+        result = self.collection.insert_one(model.to_dict())
+        return str(result.inserted_id)
 
     def find_record_by_user_id(self, user_id: str):
         return self.collection.find_one({"user_id": user_id})
 
     def find(self):
+        arr = []
         for x in self.collection.find():
-            print(x)
-
+            arr.append(x)
+        return arr
 
     def remove_record(self, user_id:  str):
         return self.collection.delete_one({'user_id': user_id})
 
     def remove_all(self):
-        return self.collection.delete_many({})
+        delete_all = self.collection.delete_many({})
+        print(delete_all.deleted_count, " documents deleted.")
+        return delete_all
 
     def update_coins(self, document: dict):
-        myquery = {"coin": document['coin']}
-        newvalues = {"$set": {"coin": document['coin'] + 1}}
-        return self.collection.update_one(myquery, newvalues)
+        my_query = {"coin": document['coin']}
+        new_values = {"$set": {"coin": document['coin'] + 1}}
+        return self.collection.update_one(my_query, new_values)
+
+    def find_suggestions_order(self, user_id: str):
+        result = self.collection.find_one({"user_id": user_id}, {"user_id": 1,"name": 1, "photo_url": 1, "bio": 1})
+        return result
 
 
 

@@ -13,7 +13,7 @@ def submit_orders():
     service = ServiceProvider().make_save_orders_service()
     result = service.save_orders(json)
     if result == True:
-        response = BaseResponse(True, MessageIds.SUCCESS)
+        response = BaseResponse({}, True, MessageIds.SUCCESS)
         return jsonify(response.serialize()), status.HTTP_201_CREATED
 
     response = BaseError(MessageIds.ERROR_INSUFFICIENT_ACCOUNT_BALANCE)

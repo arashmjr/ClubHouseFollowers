@@ -2,19 +2,18 @@ from repository.SaveOrderRepository import SaveOrderRepository
 from repository.SaveUserRepository import SaveUserRepository
 from Domain.models.SaveOrderDomainModel import SaveOrderDomainModel
 import datetime
-from flask import jsonify
 
 
 class SaveOrderService:
     order_repository: SaveOrderRepository
-    saveuser_repository: SaveUserRepository
+    save_user_repository: SaveUserRepository
 
-    def __init__(self, order_repository: SaveOrderRepository, saveuser_repository: SaveUserRepository):
+    def __init__(self, order_repository: SaveOrderRepository, save_user_repository: SaveUserRepository):
         self.order_repository = order_repository
-        self.saveuser_repository = saveuser_repository
+        self.save_user_repository = save_user_repository
 
     def save_orders(self, json: str):
-        record = self.saveuser_repository.find_record_by_user_id(json['user_id'])
+        record = self.save_user_repository.find_record_by_user_id(json['user_id'])
 
         if record is not None:
             if record['coin'] >= int(json['size']) * 2:
@@ -25,3 +24,4 @@ class SaveOrderService:
                 return True
 
         return False
+

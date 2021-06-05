@@ -4,20 +4,20 @@ from Domain.models.UserFollowDomainModel import UserFollowDomainModel
 
 
 class UserFollowService:
-    userfollow_repository: UserFollowRepository
-    saveuser_repository: SaveUserRepository
+    user_follow_repository: UserFollowRepository
+    save_user_repository: SaveUserRepository
 
-    def __init__(self, userfollow_repository: UserFollowRepository, saveuser_repository: SaveUserRepository):
+    def __init__(self, user_follow_repository: UserFollowRepository, save_user_repository: SaveUserRepository):
 
-        self.userfollow_repository = userfollow_repository
-        self.saveuser_repository = saveuser_repository
+        self.user_follow_repository = user_follow_repository
+        self.save_user_repository = save_user_repository
 
     def save_user_follow(self, json: str):
 
         model = UserFollowDomainModel(json['user_id'], json['follow_id'], json['order_id'])
-        self.userfollow_repository.insert(model)
-        document = self.saveuser_repository.find_record_by_user_id(model.user_id)
-        self.saveuser_repository.update_coins(document)
+        self.user_follow_repository.insert(model)
+        document = self.save_user_repository.find_record_by_user_id(model.user_id)
+        self.save_user_repository.update_coins(document)
         return True
 
 

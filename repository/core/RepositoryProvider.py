@@ -2,6 +2,7 @@ from repository.core.CoreDatabase import CoreDatabase
 from repository.SaveUserRepository import SaveUserRepository
 from repository.SaveOrderRepository import SaveOrderRepository
 from repository.UserFollowRepository import UserFollowRepository
+from repository.PackagesRepository import PackagesRepository
 
 
 class RepositoryProvider:
@@ -22,3 +23,7 @@ class RepositoryProvider:
     def make_user_follows(self):
         collection = self.database.user_db["userFollow"]
         return UserFollowRepository(collection)
+
+    def make_packages(self):
+        collection = self.database.user_db["packages"]
+        return PackagesRepository(collection)

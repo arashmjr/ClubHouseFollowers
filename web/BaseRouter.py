@@ -3,6 +3,8 @@ from .blueprints.SaveUser import SaveUser
 from .blueprints.GetSuggestions import GetSuggestions
 from .blueprints.Orders import Orders
 from .blueprints.UserFollows import UserFollows
+from .blueprints.GetPackages import GetPackages
+
 
 class BaseRouter:
     base_url: str
@@ -16,6 +18,9 @@ class BaseRouter:
         app.register_blueprint(Orders)
         app.register_blueprint(UserFollows)
         app.register_blueprint(GetSuggestions)
+        app.register_blueprint(GetPackages)
+
+
 
 
 

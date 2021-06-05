@@ -5,17 +5,18 @@ from web.utils.Localization import MessageIds
 from flask import jsonify
 from flask_api import status
 
-GetSuggestions = Blueprint('GetSuggestions', __name__)
+GetPackages = Blueprint('GetPackages', __name__)
 
 
-@GetSuggestions.route('/GetSuggestions', methods=['GET'])
+@GetPackages.route('/GetPackages', methods=['GET'])
 def get_suggestions():
     try:
-        service = ServiceProvider().make_get_suggestions_service()
-        result = service.suggestion_user()
+        service = ServiceProvider().make_get_packages_service()
+        result = service.get_packages()
         response = BaseResponse(result, True, MessageIds.SUCCESS)
         return jsonify(response.serialize()), status.HTTP_201_CREATED
-
     except ValueError:
         response = BaseError(MessageIds.ERROR_NOT_FOUND)
         return jsonify(response.serialize()), status.HTTP_400_BAD_REQUEST
+
+

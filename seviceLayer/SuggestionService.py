@@ -8,20 +8,20 @@ import random
 
 class SuggestionService:
     order_repository: SaveOrderRepository
-    userfollow_repository: UserFollowRepository
-    saveuser_repository: SaveUserRepository
+    user_follow_repository: UserFollowRepository
+    save_user_repository: SaveUserRepository
 
-    def __init__(self, order_repository: SaveOrderRepository ,userfollow_repository: UserFollowRepository, saveuser_repository: SaveUserRepository):
+    def __init__(self, order_repository: SaveOrderRepository, user_follow_repository: UserFollowRepository, save_user_repository: SaveUserRepository):
         self.order_repository = order_repository
-        self.userfollow_repository = userfollow_repository
-        self.saveuser_repository = saveuser_repository
+        self.user_follow_repository = user_follow_repository
+        self.save_user_repository = save_user_repository
 
     def suggestion_user(self):
         list_users = self.order_repository.find_suggestions()
 
         #update isActive user's before GET
         for item in list_users:
-            count = self.userfollow_repository.find_count_of_followIds(item['user_id'], item['order_id'])
+            count = self.user_follow_repository.find_count_of_followIds(item['user_id'], item['order_id'])
             if count is not None:
                 if count == item['size']:
                     document = self.order_repository.find_record_by_user_id(item['user_id'])
@@ -55,14 +55,14 @@ class SuggestionService:
 
             final_orders = []
             for item in arr_users:
-                record = self.userfollow_repository.find_record_by_followId_orderId(userID, item['user_id'], item['order_id'])
+                record = self.user_follow_repository.find_record_by_followId_orderId(userID, item['user_id'], item['order_id'])
                 spec_record = list(record)
                 if spec_record == []:
                     final_orders.append(item)
 
             final_suggestion = []
             for item in final_orders:
-                document = self.saveuser_repository.find_suggestions_order(item['user_id'])
+                document = self.save_user_repository.find_suggestions_order(item['user_id'])
                 if document is not None:
                     final_suggestion.append(document)
 

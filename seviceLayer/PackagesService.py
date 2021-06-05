@@ -24,9 +24,6 @@ class PackagesService:
                 model = GetPackagesDomainModel(item['package_id'], item['package_name'], item['price'])
                 self.packages_repository.insert(model)
 
-        # x = self.packages_repository.get_all()
-        # print(x)
-
         if request.headers.get('authorization') is None:
             return {'success': False}, 401
         else:

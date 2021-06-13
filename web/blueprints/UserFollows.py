@@ -20,3 +20,5 @@ def save_user():
     service.save_user_follow(json, request)
     response = BaseResponse({}, True, MessageIds.SUCCESS)
     return jsonify(response.serialize()), status.HTTP_201_CREATED
+
+

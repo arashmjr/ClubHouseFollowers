@@ -38,7 +38,6 @@ class SuggestionService:
         for record in arr:
             if record['isActive'] == True:
                 arr_users.append(record)
-        print(arr_users)
 
         # if request.headers.get('authorization') is None:
         #     return {'success': False}, 401
@@ -67,7 +66,7 @@ class SuggestionService:
             if spec_record == []:
                 final_orders.append(item)
 
-        # print(final_orders)
+
 
         final_suggestion = []
         for item in final_orders:
@@ -86,6 +85,7 @@ class SuggestionService:
             new_dict[item] = item
 
         return list_of_random_items
+
 
 
 

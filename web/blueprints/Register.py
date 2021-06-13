@@ -21,3 +21,4 @@ def register():
     except ValueError:
         response = BaseError(MessageIds.ERROR_BAD_JSON)
         return jsonify(response.serialize()), status.HTTP_400_BAD_REQUEST
+

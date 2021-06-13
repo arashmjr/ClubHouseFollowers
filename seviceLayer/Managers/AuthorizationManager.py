@@ -53,7 +53,6 @@ class AuthorizationManager:
             encode_token = request.headers['Authorization']
             try:
                 user_id = jwt.decode(encode_token, api_secret, algorithms=['HS256'])
-                # print(user_id)
 
             except:
                 abort(401)
@@ -61,4 +60,5 @@ class AuthorizationManager:
             return func(*args, **kws)
 
         return decorated_function
+
 

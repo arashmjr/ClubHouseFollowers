@@ -23,3 +23,4 @@ def submit_orders():
 
     response = BaseError(MessageIds.ERROR_INSUFFICIENT_ACCOUNT_BALANCE)
     return jsonify(response.serialize()), status.HTTP_400_BAD_REQUEST
+

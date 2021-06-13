@@ -24,3 +24,5 @@ def get_suggestions():
     except ValueError:
         response = BaseError(MessageIds.ERROR_NOT_FOUND)
         return jsonify(response.serialize()), status.HTTP_400_BAD_REQUEST
+
+

@@ -3,10 +3,15 @@ from repository.SaveUserRepository import SaveUserRepository
 from repository.SaveOrderRepository import SaveOrderRepository
 from repository.UserFollowRepository import UserFollowRepository
 from repository.PackagesRepository import PackagesRepository
+from repository.VerificationRepository import VerificationRepository
 
 
 class RepositoryProvider:
     database = CoreDatabase.get_instance()
+
+    def make_authorization(self):
+        collection = self.database.user_db["verification"]
+        return VerificationRepository(collection)
 
     def make_user_profile(self):
         collection = self.database.user_db["profile"]
@@ -27,3 +32,4 @@ class RepositoryProvider:
     def make_packages(self):
         collection = self.database.user_db["packages"]
         return PackagesRepository(collection)
+

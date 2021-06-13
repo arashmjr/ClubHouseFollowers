@@ -23,9 +23,12 @@ class MessageIds(IntEnum):
 
     SUCCESS = 1
 
+    ANSWER = 2
+
 
 
 strings = {MessageIds.SUCCESS: "Action successfully done!",
+           MessageIds.ANSWER: "Please answer the questions",
            MessageIds.ERROR_NOT_FOUND: "Method you requested not found!",
            MessageIds.ERROR_BAD_JSON: "The json you have sent is not in valid format, please check your request and try again.",
            MessageIds.ERROR_WRONG_EMAIL_FROMAT: "The email has wrong format.",

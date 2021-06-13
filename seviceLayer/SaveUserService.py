@@ -1,7 +1,7 @@
 from seviceLayer.Managers.AuthorizationManager import AuthorizationManager
 from repository.SaveUserRepository import SaveUserRepository
 from Domain.models.SaveUserDomainModel import SaveUserDomainModel
-
+from flask import Request
 
 class SaveUserService:
     repository: SaveUserRepository
@@ -11,8 +11,10 @@ class SaveUserService:
         self.repository = repository
         self.auth = auth
 
-    def save_profile(self, json: str):
-        model = SaveUserDomainModel(json['user_id'], json['name'], json['photo_url'], json['username'],
+    def save_profile(self, json: str, request: Request):
+
+        user_id = self.auth.extract_user_id(request)
+        model = SaveUserDomainModel(user_id, json['name'], json['photo_url'], json['username'],
                                     json['token'], json['phone_number'], json['bio'], json['coin'])
         record = self.repository.find_record_by_user_id(model.user_id)
 

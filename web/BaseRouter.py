@@ -4,6 +4,9 @@ from .blueprints.GetSuggestions import GetSuggestions
 from .blueprints.Orders import Orders
 from .blueprints.UserFollows import UserFollows
 from .blueprints.GetPackages import GetPackages
+from .blueprints.Register import Register
+from .blueprints.Login import Login
+from .blueprints.ResetPassword import ResetPassword
 
 
 class BaseRouter:
@@ -19,6 +22,11 @@ class BaseRouter:
         app.register_blueprint(UserFollows)
         app.register_blueprint(GetSuggestions)
         app.register_blueprint(GetPackages)
+        app.register_blueprint(Register)
+        app.register_blueprint(Login)
+        app.register_blueprint(ResetPassword)
+        
+
 
 
 

@@ -1,7 +1,9 @@
 from repository.UserFollowRepository import UserFollowRepository
 from repository.SaveOrderRepository import SaveOrderRepository
 from repository.SaveUserRepository import SaveUserRepository
-from flask import Flask, request
+from seviceLayer.Managers.AuthorizationManager import AuthorizationManager
+from flask import Request
+from flask import request
 import base64
 import random
 
@@ -10,13 +12,16 @@ class SuggestionService:
     order_repository: SaveOrderRepository
     user_follow_repository: UserFollowRepository
     save_user_repository: SaveUserRepository
+    auth: AuthorizationManager
 
-    def __init__(self, order_repository: SaveOrderRepository, user_follow_repository: UserFollowRepository, save_user_repository: SaveUserRepository):
+    def __init__(self, order_repository: SaveOrderRepository, user_follow_repository: UserFollowRepository,
+                 save_user_repository: SaveUserRepository, auth: AuthorizationManager):
         self.order_repository = order_repository
         self.user_follow_repository = user_follow_repository
         self.save_user_repository = save_user_repository
+        self.auth = auth
 
-    def suggestion_user(self):
+    def suggestion_user(self, request: Request):
         list_users = self.order_repository.find_suggestions()
 
         #update isActive user's before GET
@@ -33,50 +38,54 @@ class SuggestionService:
         for record in arr:
             if record['isActive'] == True:
                 arr_users.append(record)
+        print(arr_users)
 
-        if request.headers.get('authorization') is None:
-            return {'success': False}, 401
-        else:
-            encode_token = request.headers['authorization']
-            list_token = encode_token.split('.')
-            second_part = list_token[1]
+        # if request.headers.get('authorization') is None:
+        #     return {'success': False}, 401
+        # else:
+        #     encode_token = request.headers['authorization']
+        #     list_token = encode_token.split('.')
+        #     second_part = list_token[1]
+        #
+        #     decode_second_part = base64.b64decode(str(second_part) + '==')
+        #
+        #     string = decode_second_part.decode("UTF-8")
+        #
+        #     # split from Left
+        #     split_from_Left = string.split('"user_id":')
+        #     userId_str = split_from_Left[1]
+        #
+        #     # split from right
+        #     split_from_right = userId_str.split('}')
+        #     userID = split_from_right[0]
 
-            decode_second_part = base64.b64decode(str(second_part) + '==')
+        userID = self.auth.extract_user_id(request)
+        final_orders = []
+        for item in arr_users:
+            record = self.user_follow_repository.find_record_by_followId_orderId(userID, item['user_id'], item['order_id'])
+            spec_record = list(record)
+            if spec_record == []:
+                final_orders.append(item)
 
-            string = decode_second_part.decode("UTF-8")
+        # print(final_orders)
 
-            # split from Left
-            split_from_Left = string.split('"user_id":')
-            userId_str = split_from_Left[1]
+        final_suggestion = []
+        for item in final_orders:
+            document = self.save_user_repository.find_suggestions_order(item['user_id'])
+            if document is not None:
+                final_suggestion.append(document)
 
-            # split from right
-            split_from_right = userId_str.split('}')
-            userID = split_from_right[0]
+        # set the number to select here.
+        num_to_select = 5
+        list_of_random_items = random.sample(final_suggestion, num_to_select)
 
-            final_orders = []
-            for item in arr_users:
-                record = self.user_follow_repository.find_record_by_followId_orderId(userID, item['user_id'], item['order_id'])
-                spec_record = list(record)
-                if spec_record == []:
-                    final_orders.append(item)
+        # convert list to dict
+        new_dict = {}
+        for item in list_of_random_items:
+            item = item.pop('_id')  # remove and return the -id field to use as a key
+            new_dict[item] = item
 
-            final_suggestion = []
-            for item in final_orders:
-                document = self.save_user_repository.find_suggestions_order(item['user_id'])
-                if document is not None:
-                    final_suggestion.append(document)
-
-            # set the number to select here.
-            num_to_select = 5
-            list_of_random_items = random.sample(final_suggestion, num_to_select)
-
-            # convert list to dict
-            new_dict = {}
-            for item in list_of_random_items:
-                item = item.pop('_id')  # remove and return the -id field to use as a key
-                new_dict[item] = item
-
-            return list_of_random_items
+        return list_of_random_items
 
 
 

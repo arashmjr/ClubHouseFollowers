@@ -13,7 +13,6 @@ develop-eggs/
 dist/
 downloads/
 eggs/
-venv/
 .eggs/
 lib/
 lib64/

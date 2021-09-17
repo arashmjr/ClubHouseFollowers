@@ -17,4 +17,3 @@ pip install -r requirements.txt
 Install the mongoDB database in your local computer first from the .exe file on the official site.
 ```
 3. Run application
-

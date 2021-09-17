@@ -41,7 +41,6 @@ class PackagesService:
         user = self.save_user_repository.find_record_by_user_id(userID)
         coin_user = user['coin']
         json = {'coin': coin_user, 'packages': packages}
-
         return json
 
 
